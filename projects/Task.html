@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Task List</title>
+    </head>
+
+    <body>
+        <h1>Task List</h1>
+        <input id="task" type="text" placeholder="Enter Task"></input>
+        <button onclick="add()">Submit</button>
+
+        <ul id="List">
+
+        </ul>
+    </body>
+
+    <script>
+
+        function add() {
+            let btn = document.createElement("button");
+            btn.innerHTML = "Delete";
+            // btn.id = counter;
+            // counter = counter++;
+
+            let task_name = document.getElementById("task");
+            
+            let list = document.getElementById("List");
+            
+            let task_entry = document.createElement("li");
+            task_entry.innerHTML = task_name.value;
+
+            // if(task.entry.innerHTML.length > 0) {
+                list.append(task_entry);
+                list.append(btn);
+            // }
+            
+            
+        }
+    </script>
+</html>
