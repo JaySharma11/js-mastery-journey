@@ -1,0 +1,109 @@
+<html>
+    <head>
+        <title>Task Tracker</title>
+        <link rel="stylesheet" href="styles/style.css">
+    </head>
+
+    <body>
+        <h1>Task Tracker</h1>
+
+        <section id="addtask">
+            <input id="taskfield" type="text" placeholder="Enter your task here"></input>
+            <button id="submit" class="deletetask" type="submit" onclick="addtask()">Submit</button>
+        </section>
+
+        <section>
+            <ul id="ul">
+                <!-- <li id="1"> <div class="flex-container"> Task Tracker <button onclick="this.parentElement.style.display = 'none';">🗑️</button> </div> </li>  -->
+                <!-- <li id="2"> <div class="flex-container"> A list of tasks to track <button>🗑️</button> </div> </li> -->
+            </ul>
+        </section>
+
+    </body>
+
+    <script>
+        let tasks = ["Task Tracker", "A list of tasks to track", "Check"];
+        // let ul = document.getElementById("ul");
+        
+        taskdisplay();
+
+        function addtask () {
+            const fieldval = document.getElementById("taskfield");
+            if(fieldval.value.length == 0) {
+                alert("Please enter a task before submitting");
+                return;
+            }
+            else {
+                tasks.push(fieldval.value);
+                fieldval.value = "";
+                taskdisplay();
+            }
+        }
+
+        function taskdisplay() {
+            let ul = document.getElementById("ul");
+            ul.innerHTML = "";
+
+            for(let i=0; i<tasks.length; i++) {
+                
+                const task = document.createElement("li");
+                task.id = i;
+                
+                const div = document.createElement("div");
+                div.classList.add("flex-container");
+                div.innerHTML = tasks[i];
+
+                const complete = document.createElement("button");
+                complete.classList.add("complete");
+                complete.addEventListener("click", () => {
+                    completetask(i);
+                })
+                
+                const button = document.createElement("button");
+                button.classList.add("deletetask");
+                button.innerHTML = "🗑️";
+                button.addEventListener('click', () => {
+                    deletetask(i);
+                });
+                // button.onclick = function () {
+                //     console.log("Here");
+                // }
+
+                const statusdiv = document.createElement("div");
+                statusdiv.classList.add("statusdiv");
+
+                statusdiv.append(complete);
+                statusdiv.append(button);
+                // div.append(complete);
+                div.append(statusdiv);
+                task.append(div);
+
+                ul.append(task);
+            }
+        }
+        
+
+        function completetask(ind) {
+            const completedentry = document.getElementById(ind);
+            const computedstyle = window.getComputedStyle(completedentry);
+            const textdecoration = computedstyle.textDecorationLine;
+            // console.log(textdecoration);
+            if(textdecoration.includes("line-through")) {
+                completedentry.style.textDecoration = "none";    
+            }
+            else {
+                completedentry.style.textDecoration = "line-through";
+            }
+        }
+
+        function deletetask(ind) {
+            tasks.splice(ind, 1);
+            
+            const deletedtask = document.getElementById(ind);
+            // console.log(deletedtask);
+            deletedtask.remove();
+            // deletedtask.style.display = "none";
+        }
+
+    </script>
+</html>
